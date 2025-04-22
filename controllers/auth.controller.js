@@ -20,7 +20,13 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const { token, user } = await loginUser(email, password);
-    res.status(200).send({status: true, message: "Logined Successfully", token: token, user:{fullname: user.fullname, email: user.email, image: user.image}});
+    let tp;
+    if(user.role === "Developer"){
+      tp = "dv"
+    }else{
+      tp = "ad"
+    }
+    res.status(200).send({status: true, message: "Logined Successfully", token: token, user:{fullname: user.fullname, email: user.email, image: user.image}, tp});
   } catch (error) {
     if(error.message === "Invalid Email or Password"){
       return res.status(404).send({status: false, message: error.message});

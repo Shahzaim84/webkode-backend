@@ -14,6 +14,7 @@ connecttomongodb();
 
 // Routes
 import authRouter from "./routes/auth.routes.js";
+import adminRouter from "./routes/admin.routes.js";
 
 // App Uses
 app.use(cors({ origin: '*' , credentials: true}));
@@ -23,6 +24,7 @@ app.use(express.json({ limit: '50mb' }));
 
 // Routes
 app.use("/api/auth", authRouter)
+app.use("/api/admin", adminRouter)
 
 // Define Port and Start Server
 const PORT = process.env.PORT || 3000;
