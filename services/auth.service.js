@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import userModel from "../models/user.model.js";
+import AccountModel from "../models/account.model.js";
 import sendOTP from "../utils/sendOTP.js";
 import generateToken from "../utils/generateToken.js";
 
@@ -30,6 +31,10 @@ export const registerUser = async (fullname, email, password, role) => {
     verifiedToken: otp.otpCode,
     verifiedTokenExpiresAt: otp.otpExpirationTime,
     createdAt: new Date()
+  })
+
+  await AccountModel.create({
+    userId: newUser._id
   })
 
   const usercreate = {_id: newUser._id, role};
