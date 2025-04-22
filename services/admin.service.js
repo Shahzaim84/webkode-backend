@@ -58,7 +58,7 @@ export const createUser = async (fullname, email, password, role) => {
 
 export const subscriptionCancel = async (userId, email) => {
     const user = await userModel.findOne({
-      _id: userId, email
+      _id: userId
     });
   
     if(!user){

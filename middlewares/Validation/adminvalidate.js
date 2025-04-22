@@ -28,7 +28,6 @@ export const validateCreateUser = [
 
 export const validateSubscriptionCancel = [
     body("userId").notEmpty().withMessage("userId is required"),
-    body("email").isEmail().withMessage("Invalid email"),
     (req, res, next) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {

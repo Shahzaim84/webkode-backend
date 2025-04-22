@@ -51,6 +51,9 @@ const userSchema = mongoose.Schema({
         type: String,
         enum: ["Basic", "Standard", "Premium"]
     },
+    subscribeExpirationTime: {
+        type: Date
+    },
     createdAt:{
         type: Date,
         default: Date.now

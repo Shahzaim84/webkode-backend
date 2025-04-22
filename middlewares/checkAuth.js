@@ -37,6 +37,21 @@ export const checkTokenVerify = async(req, res, next)=>{
         if(!user.isSubscribed){
             return res.status(403).send({status: false, message: "User is not Subscribed", problem_status: "subscribed"});
         }
+        const subsTime = new Date(user.subscribeExpirationTime); // Convert to Date object
+
+        const isRecent = (subsTime) => {
+        const currentDate = new Date();
+        // Check if the subscription expired more than a month ago
+        const oneMonthAgo = new Date();
+        oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+        return subsTime >= oneMonthAgo;
+        };
+
+        if (!isRecent(subsTime)) {
+        user.isSubscribed = false;
+        await user.save();
+        return res.status(403).send({ status: false, message: "Subscription Expired", problem_status: "subscribed" });
+        }
 
         req.user = user;
         next();
@@ -186,7 +201,7 @@ export const checkAdminTokenVerify = async(req, res, next)=>{
 
         const user = await userModel.findOne({_id: decoded.id, role: decoded.role}).select("-password -changePassword -verifiedToken -verifiedTokenExpiresAt -verifiedPasswordToken -verifiedPasswordTokenExpiresAt");
 
-        if(user.role !== "Admin"){
+        if(decoded.role !== "Admin"){
             return res.status(409).send({status: false, message: "UnAuthorized Access"});
         }
 

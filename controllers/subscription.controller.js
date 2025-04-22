@@ -1,4 +1,4 @@
-import {payment, subscribe} from "../services/subscription.service.js";
+import {payment, subscribe, susbcribeCancel} from "../services/subscription.service.js";
 
 export const paymentCont = async (req, res) => {
   try {
@@ -20,7 +20,7 @@ export const susbcribeCont = async (req, res) => {
     if(status){
       res.status(200).send({status: true, message: "Subscribe Successfully"});
     }else{
-      re.status(403).send({status: false, message: "Not Successfully Subscribe"})
+      res.status(403).send({status: false, message: "Not Successfully Subscribe"})
     }
   } catch (error) {
     console.log(error);
@@ -28,3 +28,14 @@ export const susbcribeCont = async (req, res) => {
   }
 };
 
+
+export const susbcribeCancelCont = async (req, res) => {
+  try {
+    const user = req.user;
+    await susbcribeCancel(user._id);
+    res.status(200).send({status: true, message: "Unsubscribe Successfully"});
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({status: false, message: "Internal Server Error"});
+  }
+};

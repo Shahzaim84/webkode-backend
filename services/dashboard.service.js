@@ -111,8 +111,17 @@ export const transfer = async (sourceId, destinationId, amount) => {
     if (isNaN(from) || isNaN(to)) throw new Error('Invalid date format');
   
     const transactions = await TransactionModel.find({
-      sourceId: account._id,
-      timestamp: { $gte: from, $lte: to }
+      $and: [
+        {
+          $or: [
+            { sourceId: userId },
+            { destinationId: userId }
+          ]
+        },
+        {
+          timestamp: { $gte: from, $lte: to }
+        }
+      ]
     });
   
     const totalAmount = transactions.reduce((sum, t) => sum + t.amount, 0);

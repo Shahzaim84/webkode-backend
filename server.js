@@ -6,6 +6,7 @@ import fileUpload from "express-fileupload";
 import Stripe from "stripe";
 import path from 'path';
 import { fileURLToPath } from 'url';
+import logRequest from "./middlewares/logMiddleware.js";
 
 const app = express();
 
@@ -32,13 +33,15 @@ app.use(express.json({ limit: '50mb' }));
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+app.use(logRequest);
+
 // Serve invoice PDFs
 app.use('/invoices', express.static(path.join(__dirname, 'invoices')));
 
 // Routes
 app.use("/api/auth", authRouter)
 app.use("/api/admin", adminRouter)
-app.use("/api/subscription", subscriptionRouter)
+app.use("/api/subscriptions", subscriptionRouter)
 app.use("/api", dashboardRouter)
 
 

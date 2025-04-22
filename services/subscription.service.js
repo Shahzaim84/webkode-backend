@@ -41,6 +41,7 @@ export const subscribe = async (sessionId, email) => {
         status = true;
         const user = await userModel.findOne({email: email});
         user.isSubscribed = true;
+        user.subscribeExpirationTime = new Date();
         await user.save();
     } else {
         status = false;
@@ -48,3 +49,16 @@ export const subscribe = async (sessionId, email) => {
     
     return status;
 };
+
+export const susbcribeCancel = async (userId) => {
+    const user = await userModel.findOne({ _id: userId });
+  
+    if (!user) {
+      throw new Error("User not Found");
+    }
+  
+    user.isSubscribed = false;
+  
+    await user.save();
+  };
+  

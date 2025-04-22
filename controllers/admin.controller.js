@@ -32,8 +32,8 @@ export const createUserCont = async (req, res) => {
 
 export const subscriptionCancelCont = async (req, res) => {
     try {
-      const { userId, email } = req.body;
-      await subscriptionCancel(userId, email);
+      const { userId } = req.body;
+      await subscriptionCancel(userId);
       res.status(200).send({status: true, message: "Subscription Cancelled Successfully"});
     } catch (error) {
       if(error.message === "User not Found"){
