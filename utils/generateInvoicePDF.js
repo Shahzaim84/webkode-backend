@@ -38,7 +38,7 @@ const generateInvoiceSummaryPDF = async (summaryData, filename) => {
     .fillColor('#000000')
     .fontSize(10)
     .text('FinConnect', 50, 120)
-    .text('WebKode25', 50, 135)
+    // .text('WebKode25', 50, 135)
     .text('Created by (MetaStackers) Team', 50, 135)
 
   // Summary Highlights
