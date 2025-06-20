@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config()
 
-const emailsender = (email, otpcode)=>{
+const emailsender = async(email, otpcode)=>{
 
     const transporter = nodemailer.createTransport({
         service: "gmail",
@@ -194,7 +194,7 @@ const emailsender = (email, otpcode)=>{
     };
 
 
-    sendmail(transporter, mailoption);
+    await sendmail(transporter, mailoption);
 
 } 
 

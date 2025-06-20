@@ -123,6 +123,8 @@ export const transfer = async (sourceId, destinationId, amount) => {
         }
       ]
     });
+
+    console.log(transactions, userId)
   
     const totalAmount = transactions.reduce((sum, t) => sum + t.amount, 0);
   
