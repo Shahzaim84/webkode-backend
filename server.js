@@ -7,7 +7,6 @@ import Stripe from "stripe";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import logRequest from "./middlewares/logMiddleware.js";
-import axios from "axios"
 
 const app = express();
 
